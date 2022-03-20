@@ -75,6 +75,7 @@ where
     utils::build_plain_page(
         buffer,
         array.len(),
+        array.len(),
         array.null_count(),
         0,
         definition_levels_byte_length,

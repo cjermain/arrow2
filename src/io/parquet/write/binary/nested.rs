@@ -41,6 +41,7 @@ where
     utils::build_plain_page(
         buffer,
         levels::num_values(nested.offsets()),
+        nested.offsets().len().saturating_sub(1),
         array.null_count(),
         repetition_levels_byte_length,
         definition_levels_byte_length,

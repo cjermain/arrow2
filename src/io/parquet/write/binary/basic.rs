@@ -87,6 +87,7 @@ pub fn array_to_page<O: Offset>(
     utils::build_plain_page(
         buffer,
         array.len(),
+        array.len(),
         array.null_count(),
         0,
         definition_levels_byte_length,
@@ -97,7 +98,7 @@ pub fn array_to_page<O: Offset>(
     )
 }
 
-pub(super) fn build_statistics<O: Offset>(
+pub(crate) fn build_statistics<O: Offset>(
     array: &BinaryArray<O>,
     primitive_type: PrimitiveType,
 ) -> ParquetStatistics {

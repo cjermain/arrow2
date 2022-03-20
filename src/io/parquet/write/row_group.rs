@@ -80,23 +80,19 @@ impl<A: AsRef<dyn Array> + 'static, I: Iterator<Item = Result<Chunk<A>>>> RowGro
 impl<A: AsRef<dyn Array> + 'static + Send + Sync, I: Iterator<Item = Result<Chunk<A>>>> Iterator
     for RowGroupIterator<A, I>
 {
-    type Item = Result<(RowGroupIter<'static, ArrowError>, usize)>;
+    type Item = Result<RowGroupIter<'static, ArrowError>>;
 
     fn next(&mut self) -> Option<Self::Item> {
         let options = self.options;
 
         self.iter.next().map(|maybe_chunk| {
             let chunk = maybe_chunk?;
-            let len = chunk.len();
             let encodings = self.encodings.clone();
-            Ok((
-                row_group_iter(
-                    chunk,
-                    encodings,
-                    self.parquet_schema.columns().to_vec(),
-                    options,
-                ),
-                len,
+            Ok(row_group_iter(
+                chunk,
+                encodings,
+                self.parquet_schema.columns().to_vec(),
+                options,
             ))
         })
     }
