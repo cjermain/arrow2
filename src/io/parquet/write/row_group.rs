@@ -28,13 +28,15 @@ pub fn row_group_iter<A: AsRef<dyn Array> + 'static + Send + Sync>(
             .zip(columns.into_iter())
             .zip(encodings.into_iter())
             .map(move |((array, descriptor), encoding)| {
-                array_to_pages(array.as_ref(), descriptor, options, encoding).map(move |pages| {
-                    let encoded_pages = DynIter::new(pages.map(|x| Ok(x?)));
-                    let compressed_pages =
-                        Compressor::new(encoded_pages, options.compression, vec![])
-                            .map_err(ArrowError::from);
-                    DynStreamingIterator::new(compressed_pages)
-                })
+                array_to_pages(array.as_ref(), descriptor.descriptor, options, encoding).map(
+                    move |pages| {
+                        let encoded_pages = DynIter::new(pages.map(|x| Ok(x?)));
+                        let compressed_pages =
+                            Compressor::new(encoded_pages, options.compression, vec![])
+                                .map_err(ArrowError::from);
+                        DynStreamingIterator::new(compressed_pages)
+                    },
+                )
             }),
     )
 }

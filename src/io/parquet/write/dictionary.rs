@@ -1,6 +1,6 @@
 use parquet2::{
     encoding::{hybrid_rle::encode_u32, Encoding},
-    metadata::ColumnDescriptor,
+    metadata::Descriptor,
     page::{EncodedDictPage, EncodedPage},
     write::{DynIter, WriteOptions},
 };
@@ -9,21 +9,23 @@ use super::binary::encode_plain as binary_encode_plain;
 use super::fixed_len_bytes::encode_plain as fixed_binary_encode_plain;
 use super::primitive::encode_plain as primitive_encode_plain;
 use super::utf8::encode_plain as utf8_encode_plain;
-use crate::array::{Array, DictionaryArray, DictionaryKey, PrimitiveArray};
 use crate::bitmap::Bitmap;
 use crate::datatypes::DataType;
 use crate::error::{ArrowError, Result};
-use crate::io::parquet::read::is_type_nullable;
 use crate::io::parquet::write::utils;
+use crate::{
+    array::{Array, DictionaryArray, DictionaryKey, PrimitiveArray},
+    io::parquet::read::schema::is_nullable,
+};
 
 fn encode_keys<K: DictionaryKey>(
     array: &PrimitiveArray<K>,
     // todo: merge this to not discard values' validity
     validity: Option<&Bitmap>,
-    descriptor: ColumnDescriptor,
+    descriptor: Descriptor,
     options: WriteOptions,
 ) -> Result<EncodedPage> {
-    let is_optional = is_type_nullable(descriptor.type_());
+    let is_optional = is_nullable(&descriptor.primitive_type.field_info);
 
     let mut buffer = vec![];
 
@@ -117,7 +119,7 @@ macro_rules! dyn_prim {
 
 pub fn array_to_pages<K: DictionaryKey>(
     array: &DictionaryArray<K>,
-    descriptor: ColumnDescriptor,
+    descriptor: Descriptor,
     options: WriteOptions,
     encoding: Encoding,
 ) -> Result<DynIter<'static, Result<EncodedPage>>> {

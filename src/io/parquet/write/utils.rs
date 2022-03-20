@@ -3,7 +3,7 @@ use crate::bitmap::Bitmap;
 use parquet2::{
     compression::Compression,
     encoding::{hybrid_rle::encode_bool, Encoding},
-    metadata::ColumnDescriptor,
+    metadata::Descriptor,
     page::{DataPage, DataPageHeader, DataPageHeaderV1, DataPageHeaderV2},
     statistics::ParquetStatistics,
     write::WriteOptions,
@@ -65,7 +65,7 @@ pub fn build_plain_page(
     repetition_levels_byte_length: usize,
     definition_levels_byte_length: usize,
     statistics: Option<ParquetStatistics>,
-    descriptor: ColumnDescriptor,
+    descriptor: Descriptor,
     options: WriteOptions,
     encoding: Encoding,
 ) -> Result<DataPage> {

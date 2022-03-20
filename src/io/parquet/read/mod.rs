@@ -19,7 +19,7 @@ pub use parquet2::{
         decompress, get_column_iterator, get_page_iterator as _get_page_iterator,
         get_page_stream as _get_page_stream, read_metadata as _read_metadata,
         read_metadata_async as _read_metadata_async, BasicDecompressor, ColumnChunkIter,
-        Decompressor, MutStreamingIterator, PageFilter, PageIterator, ReadColumnIterator, State,
+        Decompressor, MutStreamingIterator, PageFilter, PageReader, ReadColumnIterator, State,
     },
     schema::types::{
         LogicalType, ParquetType, PhysicalType, PrimitiveConvertedType,
@@ -32,7 +32,6 @@ pub use parquet2::{
 pub use deserialize::{column_iter_to_arrays, get_page_iterator};
 pub use file::{FileReader, RowGroupReader};
 pub use row_group::*;
-pub(crate) use schema::is_type_nullable;
 pub use schema::{infer_schema, FileMetaData};
 
 use std::{
