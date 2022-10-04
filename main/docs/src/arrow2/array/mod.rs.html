@@ -432,6 +432,10 @@
 <span id="432">432</span>
 <span id="433">433</span>
 <span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Contains the [`Array`] and [`MutableArray`] trait objects declaring arrays,
 //! as well as concrete arrays (such as [`Utf8Array`] and [`MutableUtf8Array`]).
 //!
@@ -811,7 +815,11 @@
 <span class="kw">mod </span>ffi;
 <span class="kw">mod </span>fmt;
 <span class="kw">pub mod </span>growable;
+<span class="kw">mod </span>iterator;
 <span class="kw">pub mod </span>ord;
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>iterator::ArrayAccessor;
+<span class="kw">pub use </span>iterator::ArrayValuesIter;
 
 <span class="kw">pub use </span>equal::equal;
 <span class="kw">pub use </span>fmt::{get_display, get_value_display};
@@ -828,7 +836,7 @@
 <span class="kw">pub use </span>primitive::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>struct_::{MutableStructArray, StructArray};
 <span class="kw">pub use </span>union::UnionArray;
-<span class="kw">pub use </span>utf8::{MutableUtf8Array, Utf8Array, Utf8ValuesIter};
+<span class="kw">pub use </span>utf8::{MutableUtf8Array, MutableUtf8ValuesArray, Utf8Array, Utf8ValuesIter};
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::ffi::offset_buffers_children_dictionary;
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="self">self</span>::ffi::FromFfi;
@@ -867,4 +875,4 @@
     </span><span class="kw">fn </span>offsets(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[O];
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="arrow2" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (470e518c4 2022-09-27)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="arrow2" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (f83e0266c 2022-10-03)" ></div></body></html>

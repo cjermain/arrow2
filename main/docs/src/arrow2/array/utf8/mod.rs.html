@@ -606,6 +606,17 @@
 <span id="606">606</span>
 <span id="607">607</span>
 <span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
 </pre><pre class="rust"><code><span class="kw">use crate</span>::{
     bitmap::{
         utils::{zip_validity, ZipValidity},
@@ -629,8 +640,19 @@
 <span class="kw">mod </span>from;
 <span class="kw">mod </span>iterator;
 <span class="kw">mod </span>mutable;
+<span class="kw">mod </span>mutable_values;
 <span class="kw">pub use </span>iterator::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>mutable::<span class="kw-2">*</span>;
+<span class="kw">pub use </span>mutable_values::MutableUtf8ValuesArray;
+
+<span class="comment">// Auxiliary struct to allow presenting &amp;str as [u8] to a generic function
+</span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">struct </span>StrAsBytes&lt;P&gt;(P);
+<span class="kw">impl</span>&lt;T: AsRef&lt;str&gt;&gt; AsRef&lt;[u8]&gt; <span class="kw">for </span>StrAsBytes&lt;T&gt; {
+    <span class="attribute">#[inline(always)]
+    </span><span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
+        <span class="self">self</span>.<span class="number">0</span>.as_ref().as_bytes()
+    }
+}
 
 <span class="doccomment">/// A [`Utf8Array`] is arrow&#39;s semantic equivalent of an immutable `Vec&lt;Option&lt;String&gt;&gt;`.
 /// Cloning and slicing this struct is `O(1)`.
@@ -1215,4 +1237,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="arrow2" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (470e518c4 2022-09-27)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="arrow2" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (f83e0266c 2022-10-03)" ></div></body></html>
